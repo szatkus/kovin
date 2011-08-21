@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <meta charset="UTF-8">
 <title>Rejestracja</title>
-<form action="/register/">
-<input type="text" name="name">
+{% if error %}
+{{ error }}
+{% endif %}
+<form action="/register/" method="post">
+{% csrf_token %}
+Nazwa postaci: <input type="text" name="name" value="{{ name }}"><br>
+Hasło: <input type="password" name="pass"><br>
+Powtórz hasło: <input type="password" name="pass2"><br>
+<input type="submit">
 </form>

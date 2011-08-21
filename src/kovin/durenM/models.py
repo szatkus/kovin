@@ -2,6 +2,7 @@ from django.db import models
 
 class Character(models.Model):
     name = models.CharField(max_length=50, primary_key=True)
+    password = models.CharField(max_length=50) 
     def __unicode__(self):
         return self.name
 
