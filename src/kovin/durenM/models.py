@@ -1,7 +1,9 @@
 from django.db import models
 
 class Character(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, primary_key=True)
+    def __unicode__(self):
+        return self.name
 
 
 class Attribute(models.Model):
@@ -9,3 +11,5 @@ class Attribute(models.Model):
     owner = models.ForeignKey(Character)
     level = models.IntegerField()
     exp = models.IntegerField()
+    def __unicode__(self):
+        return self.name + '@' + self.owner.name
