@@ -8,6 +8,9 @@ import hashlib
 def index(request):
     return render_to_response('index.html')
 
+def welcome(request, name):
+    return render_to_response('welcome.html', {'name' : name})
+
 def register(request):
     context = {}
     if request.POST:
