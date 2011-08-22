@@ -8,6 +8,7 @@ DUREN_PATH = os.path.dirname(os.path.realpath(durenM.__file__))
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+
 ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
 )
@@ -17,7 +18,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '/home/szatkus/Projekty/workspace/kovin/src/sqlite.db',                      # Or path to database file if using sqlite3.
+        'NAME': os.path.dirname(os.path.realpath(__file__)) + '/sqlite.db',                      # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
@@ -69,6 +70,7 @@ SECRET_KEY = 'ajym)8n-6^1p4liklu0xu27(or5z)#cq3ffiv&clex=898bk)6'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
+    
 #     'django.template.loaders.eggs.Loader',
 )
 
@@ -81,6 +83,12 @@ MIDDLEWARE_CLASSES = (
 )
 
 ROOT_URLCONF = 'kovin.urls'
+
+TEMPLATE_CONTEXT_PROCESSORS = ('django.core.context_processors.auth', 
+                               'django.core.context_processors.debug', 
+                               'django.core.context_processors.i18n', 
+                               'django.core.context_processors.media', 
+                               'django.core.context_processors.request',)
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".

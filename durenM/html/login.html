@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<title>Logowanie</title>
+{% if error %}
+{{ error }}
+{% endif %}
+<form action="/login/" method="post">
+{% csrf_token %}
+Nazwa postaci: <input type="text" name="name" value="{{ name }}"><br>
+Hasło: <input type="password" name="pass"><br>
+<input type="submit">
+</form>

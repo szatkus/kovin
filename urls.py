@@ -6,6 +6,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
+    (r'^login/', 'durenM.views.login'),
     (r'^register/', 'durenM.views.register'),
     (r'^welcome/(?P<name>[a-zA-Z_]+)', 'durenM.views.welcome'),
     (r'^$', 'durenM.views.index'),
