@@ -3,5 +3,6 @@
 <title>{% block title %}{% endblock %}</title>
 {% if request.session.user %}
 Jesteś zalogowany jako {{ request.session.user.name }}<br>
+<a href="/logout">Wyloguj</a><br>
 {% endif %}
 {% block content %}{% endblock %}

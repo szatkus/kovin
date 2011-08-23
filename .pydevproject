@@ -11,4 +11,7 @@
 <pydev_pathproperty name="org.python.pydev.PROJECT_SOURCE_PATH">
 <path>/kovin</path>
 </pydev_pathproperty>
+<pydev_pathproperty name="org.python.pydev.PROJECT_EXTERNAL_SOURCE_PATH">
+<path>/home/szatkus/Projekty/workspace/durenV</path>
+</pydev_pathproperty>
 </pydev_project>

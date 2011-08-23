@@ -11,7 +11,12 @@ import hashlib
 def index(request):
     request.session['dupa'] = 'chuj'
     if ('user' in request.session):
-        return render_to_response('dashboard.html', {}, context_instance=RequestContext(request))
+        user = request.session['user']
+        character = user.to_extsea()
+        if (len(character.attrib) == 0):
+            return render_to_response('newchar.html', {}, context_instance=RequestContext(request))
+        else:
+            return render_to_response('dashboard.html', {}, context_instance=RequestContext(request))
     else:
         return render_to_response('index.html')
 
@@ -20,6 +25,8 @@ def welcome(request, name):
 
 def register(request):
     context = {}
+    if ('user' in request.session):
+        return HttpResponseRedirect('/')
     if request.POST:
         pattern = re.compile('^[A-z0-9_]+$')
         if not(pattern.match(request.POST['name'])):
@@ -44,6 +51,8 @@ def register(request):
 
 def login(request):
     context = {}
+    if ('user' in request.session):
+        return HttpResponseRedirect('/')
     if request.POST:
         user = Character.objects.filter(name=request.POST['name'])
         password = hashlib.sha224(request.POST['pass']).hexdigest()
@@ -56,3 +65,8 @@ def login(request):
     
     context.update(csrf(request))
     return render_to_response('login.html', context)
+
+def logout(request):
+    if ('user' in request.session):
+        del request.session['user']
+    return render_to_response('logout.html')

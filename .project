@@ -3,6 +3,7 @@
 	<name>kovin</name>
 	<comment></comment>
 	<projects>
+		<project>durenV</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
