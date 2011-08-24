@@ -9,8 +9,8 @@ class Character(models.Model):
         return self.name    
     def to_extsea(self):
         character = extsea.Character(self.name)
-        for i in Attribute.objects.filter(owner = self):
-            character.add(character.attrib[i].to_extsea())
+        for attribute in Attribute.objects.filter(owner = self):
+            character.add(attribute.to_extsea())
         return character
     @staticmethod
     def from_extsea(character):
@@ -19,11 +19,10 @@ class Character(models.Model):
             character_model = result[0]
         else:
             character_model = Character()
-        character_model.save()
+            character_model.name = character.name
         for i in character.attrib:
             attribute = Attribute.from_extsea(character.attrib[i])
             attribute.owner_id = character_model
-           # attribute.owner = character_model
             attribute.save()
         return character_model
 

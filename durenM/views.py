@@ -12,7 +12,6 @@ from durenM import rpgdb
 
 
 def index(request):
-    request.session['dupa'] = 'chuj'
     if ('user' in request.session):
         user = request.session['user']
         character = user.to_extsea()

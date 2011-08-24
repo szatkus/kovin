@@ -10,5 +10,6 @@ urlpatterns = patterns('',
     (r'^logout/', 'durenM.views.logout'),
     (r'^register/', 'durenM.views.register'),
     (r'^welcome/(?P<name>[a-zA-Z_]+)', 'durenM.views.welcome'),
+    (r'^stats/', 'views.character.stats'),
     (r'^$', 'durenM.views.index'),
 )
