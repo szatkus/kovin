@@ -41,9 +41,10 @@ def register(request):
         if not('error' in context):
             new_char = extsea.Character(request.POST['name'])
             new_char.add(rpgdb.create("human"))
-            new_char.add(rpgdb.createl("strength", 4))
-            new_char.add(rpgdb.createl("speed", 4))
-            new_char.add(rpgdb.createl("life", 4))
+            new_char.add(rpgdb.createl("strength", 1))
+            new_char.add(rpgdb.createl("speed", 1))
+            new_char.add(rpgdb.createl("life", 1))
+            new_char.add(rpgdb.createl("hit", 1))
             if (request.POST['gender'] == 'male'):
                 new_char.add(rpgdb.create('male'))
             else:

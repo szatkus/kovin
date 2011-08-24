@@ -1,5 +1,43 @@
 {% extends 'base.html' %}
 {% block title %}DurenM{% endblock %}
 {% block content %}
-Imię: {{ character.name }}
+Imię: {{ character.name }}<br>
+Płeć:
+{% for name, attrib in character.attrib.items %}
+	{% if attrib.atype == 'gender' %}
+		{{ attrib.title }} 
+	{% endif %}
+{% endfor %}<br>
+Rasa:
+{% for name, attrib in character.attrib.items %}
+	{% if attrib.atype == 'race' %}
+		{{ attrib.title }} 
+	{% endif %}
+{% endfor %}<br>
+<br><b>Cechy:</b><br>
+{% for name, attrib in character.attrib.items %}
+	{% if attrib.atype == 'ability' %}
+		<i>{{ attrib.title }}</i><br> 
+		{% if attrib.max_level > 1 %}
+			Wartość: {{ attrib.level }}<br>
+			Poziom: {{ attrib.rlevel }}<br>
+		{% endif %}
+		{% if attrib.required > -1 %}
+		Punkty doświadczenia: {{ attrib.exp }}/{{ attrib.required }}<br>
+		{% endif %}<br>
+	{% endif %}
+{% endfor %}
+<br><b>Ataki:</b><br>
+{% for name, attrib in character.attrib.items %}
+	{% if attrib.atype == 'attack' %}
+		<i>{{ attrib.title }}</i><br> 
+		{% if attrib.max_level > 1 %}
+			Wartość: {{ attrib.level }}<br>
+			Poziom: {{ attrib.rlevel }}<br>
+		{% endif %}
+		{% if attrib.required > -1 %}
+		Punkty doświadczenia: {{ attrib.exp }}/{{ attrib.required }}<br>
+		{% endif %}<br>
+	{% endif %}
+{% endfor %}
 {% endblock %}
