@@ -4,8 +4,11 @@ from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.core.context_processors import csrf
 from durenM.models import Character
+import extsea
 import re
 import hashlib
+from durenM import rpgdb
+
 
 
 def index(request):
@@ -13,10 +16,7 @@ def index(request):
     if ('user' in request.session):
         user = request.session['user']
         character = user.to_extsea()
-        if (len(character.attrib) == 0):
-            return render_to_response('newchar.html', {}, context_instance=RequestContext(request))
-        else:
-            return render_to_response('dashboard.html', {}, context_instance=RequestContext(request))
+        return render_to_response('dashboard.html', {'character' : character}, context_instance=RequestContext(request))
     else:
         return render_to_response('index.html')
 
@@ -32,8 +32,6 @@ def register(request):
         if not(pattern.match(request.POST['name'])):
             context['error'] = 'Nieprawidłowe znaki w nazwie użytkownika.'
         is_exists = Character.objects.filter(name=request.POST['name'])
-        new_char = Character()
-        new_char.name = request.POST['name']
         context['name'] = request.POST['name']
         if is_exists.count() > 0:
             context['error'] = 'Użytkownik istnieje.'
@@ -42,8 +40,18 @@ def register(request):
         if request.POST['pass'] != request.POST['pass2']:
             context['error'] = 'Hasła nie zgadzają się.'
         if not('error' in context):
-            new_char.password = hashlib.sha224(request.POST['pass']).hexdigest()
-            new_char.save()
+            new_char = extsea.Character(request.POST['name'])
+            new_char.add(rpgdb.create("human"))
+            new_char.add(rpgdb.createl("strength", 4))
+            new_char.add(rpgdb.createl("speed", 4))
+            new_char.add(rpgdb.createl("life", 4))
+            if (request.POST['gender'] == 'male'):
+                new_char.add(rpgdb.create('male'))
+            else:
+                new_char.add(rpgdb.create('female'))
+            new_user = Character.from_extsea(new_char)
+            new_user.password = hashlib.sha224(request.POST['pass']).hexdigest()
+            new_user.save()
             return HttpResponseRedirect('/welcome/' + new_char.name)
     
     context.update(csrf(request))

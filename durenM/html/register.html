@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <meta charset="UTF-8">
-<title>Rejestracja</title>
+<title>Tworzenie postaci</title>
 {% if error %}
 {{ error }}
 {% endif %}
@@ -9,5 +9,7 @@
 Nazwa postaci: <input type="text" name="name" value="{{ name }}"><br>
 Hasło: <input type="password" name="pass"><br>
 Powtórz hasło: <input type="password" name="pass2"><br>
+<input type="radio" name="gender" value="male" checked="checked">Mężczyzna<br>
+<input type="radio" name="gender" value="female">Kobieta<br>
 <input type="submit">
 </form>
