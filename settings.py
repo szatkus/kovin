@@ -1,9 +1,9 @@
 # Django settings for kovin project.
 
-import durenM
+
 import os
 
-DUREN_PATH = os.path.dirname(os.path.realpath(durenM.__file__))
+
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -94,7 +94,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.join(DUREN_PATH, 'html')
+    os.path.dirname(os.path.realpath(__file__)) + '/html'
 )
 
 INSTALLED_APPS = (
@@ -102,10 +102,10 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
+    'kovin',
     'django.contrib.messages',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
-    'durenM'
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )

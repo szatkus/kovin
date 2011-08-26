@@ -3,11 +3,11 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.core.context_processors import csrf
-from durenM.models import Character
+from kovin.models import Character
 import extsea
 import re
 import hashlib
-from durenM import rpgdb
+import rpgdb
 
 
 
