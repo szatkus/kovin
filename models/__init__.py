@@ -1,6 +1,3 @@
 from .character import *
+from .place import *
 
-from django.contrib import admin
-
-admin.site.register(Character)
-admin.site.register(Attribute)

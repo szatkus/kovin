@@ -12,5 +12,7 @@ urlpatterns = patterns('',
     (r'^register/', views.register),
     (r'^welcome/(?P<name>[a-zA-Z_]+)', views.welcome),
     (r'^stats/', views.character.stats),
+    (r'^place/$', views.place.look),
+    (r'^place/(?P<id>\d+)', views.place.action),
     (r'^$', views.index),
 )

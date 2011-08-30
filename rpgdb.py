@@ -145,7 +145,7 @@ def create(name):
 	#Bite
 	if name == 'bite':
 		bite = extsea.Attribute('bite')
-		bite.deps = ['strength']
+		bite.dep = ['strength']
 		def bite_use(self, user, target):
 			dmg = target.damage(self.level)
 			message('%s lost %d HP.'%(target.name, dmg))
@@ -156,7 +156,7 @@ def create(name):
 	#Hit
 	if name == "hit":
 		hit = extsea.Attribute("hit")
-		hit.deps = ["strength"]
+		hit.dep = ["strength"]
 		def hit_use(self, user, target):
 			dmg = target.damage(self.level)
 			message("%s lost %d HP."%(target.name, dmg))

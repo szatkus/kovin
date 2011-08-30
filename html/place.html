@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block title %}Lokacja{% endblock %}
+{% block content %}
+Lokacja: <b>{{ place }}</b><br><br>
+{% for object in objects %}
+<a href="/place/{{ object.id }}">{{ object.name }}</a><br>
+{% endfor %}
+{% endblock %}

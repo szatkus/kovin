@@ -1,14 +1,18 @@
 from django.db import models
+from place import Place
 import extsea
 import rpgdb
 
 class Character(models.Model):
     name = models.CharField(max_length=50, primary_key=True)
-    password = models.CharField(max_length=50)
+    password = models.CharField(max_length=100)
+    place = models.ForeignKey(Place)
     class Meta:
         app_label = "kovin"
     def __unicode__(self):
-        return self.name    
+        return self.name
+    def goto(self, place_id):
+        self.place = Place.objects.get(id=place_id)
     def to_extsea(self):
         character = extsea.Character(self.name)
         for attribute in Attribute.objects.filter(owner = self):
@@ -44,7 +48,7 @@ class Attribute(models.Model):
     @staticmethod
     def from_extsea(attribute):
         if hasattr(attribute, 'id'):
-            attribute_model = Attribute.object.get(id=attribute.id)
+            attribute_model = Attribute.objects.get(id=attribute.id)
         else:
             attribute_model = Attribute()
             attribute_model.exp = 0

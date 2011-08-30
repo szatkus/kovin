@@ -3,7 +3,7 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.core.context_processors import csrf
-from kovin.models import Character
+from kovin.models import Character, Place
 import extsea
 import re
 import hashlib
@@ -51,6 +51,7 @@ def register(request):
                 new_char.add(rpgdb.create('female'))
             new_user = Character.from_extsea(new_char)
             new_user.password = hashlib.sha224(request.POST['pass']).hexdigest()
+            new_user.place = Place.objects.all()[0]
             new_user.save()
             return HttpResponseRedirect('/welcome/' + new_char.name)
     
