@@ -35,6 +35,8 @@ def action(request, id):
         user.from_extsea(character)
         user.save()
         request.session['user'] = user
-        return look(request)
+        result = look(request)
+        user.dialog_buffer = []
+        return result
     else:
         return HttpResponseRedirect('/login/')

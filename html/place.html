@@ -1,8 +1,21 @@
 {% extends 'base.html' %}
 {% block title %}Lokacja{% endblock %}
 {% block content %}
+{% for text in user.dialog_buffer %}
+{% if forloop.first %}
+<div id="dialog">
+{% endif %}
+<div>{{ text }}</div>
+{% if forloop.last %}
+<div><button onclick="document.getElementById('dialog').style.display = 'none'">Zamknij</button>
+</div>
+</div>
+{% endif %}
+{% endfor %}
+<div id="main">
 Lokacja: <b>{{ place }}</b><br><br>
 {% for object in objects %}
 <a href="/place/{{ object.id }}">{{ object.name }}</a><br>
+</div>
 {% endfor %}
 {% endblock %}
