@@ -31,7 +31,7 @@ def action(request, id):
 			battle = extsea.Battle(chars)
 			battle.run()
 			if (character.life <= 0):
-				raise('gameover')
+				raise(Exception('gameover'))
 		def dialog(text):
 			'''Create new dialog'''
 			request.session['dialog'].append(text)
@@ -51,7 +51,7 @@ def action(request, id):
 		obj = Object.objects.get(id=id)
 		try:
 			exec(obj.action) in context
-		except str:
+		except Exception:
 			result = HttpResponseRedirect('/gameover/');
 		user.from_extsea(character)
 		user.save()
