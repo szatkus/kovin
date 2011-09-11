@@ -48,7 +48,7 @@ class Attribute(models.Model):
 	name = models.CharField(max_length=50)
 	owner = models.ForeignKey(Character)
 	level = models.IntegerField()
-	exp = models.FloatField()
+	exp = models.DecimalField(max_digits=15, decimal_places=2)
 	class Meta:
 		app_label = 'kovin'
 	def __unicode__(self):
