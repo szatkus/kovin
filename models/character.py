@@ -3,8 +3,8 @@ from place import Place
 import extsea
 import rpgdb
 
-'''Character class for django'''
 class Character(models.Model):
+	'''Character class for django'''
 	name = models.CharField(max_length=50, primary_key=True)
 	password = models.CharField(max_length=100)
 	place = models.ForeignKey(Place)
@@ -13,14 +13,14 @@ class Character(models.Model):
 		app_label = 'kovin'
 	def __unicode__(self):
 		return self.name
-	'''Create new dialog'''
 	def dialog(self, text):
+		'''Create new dialog'''
 		self.dialog_buffer.append(text)
-	'''Go to specified location'''
 	def goto(self, place_id):
+		'''Go to specified location'''
 		self.place = Place.objects.get(id=place_id)
-	'''Convert django model into character from extsea module'''
 	def to_extsea(self):
+		'''Convert django model into character from extsea module'''
 		character = extsea.Character(self.name)
 		for attribute in Attribute.objects.filter(owner = self):
 			character.add(attribute.to_extsea())
@@ -35,9 +35,9 @@ class Character(models.Model):
 			print(target.name)
 		character.fight = fight
 		return character
-	'''Create django model from extsea character'''
 	@staticmethod
 	def from_extsea(character):
+		'''Create django model from extsea character'''
 		result = Character.objects.filter(name=character.name)
 		if len(result) > 0:
 			character_model = result[0]
@@ -50,8 +50,9 @@ class Character(models.Model):
 			attribute.save()
 		return character_model
 
-'''Single attribute'''
+
 class Attribute(models.Model):
+	'''Single attribute'''
 	name = models.CharField(max_length=50)
 	owner = models.ForeignKey(Character)
 	level = models.IntegerField()
@@ -61,6 +62,7 @@ class Attribute(models.Model):
 	def __unicode__(self):
 		return self.name + '@' + self.owner.name
 	def to_extsea(self):
+		'''Convert into extsea class'''
 		attribute = rpgdb.createl(self.name, self.level)
 		attribute.id = self.id
 		attribute.rlevel = attribute.level
@@ -68,6 +70,7 @@ class Attribute(models.Model):
 		return attribute
 	@staticmethod
 	def from_extsea(attribute):
+		'''Create new model from extsea object'''
 		if hasattr(attribute, 'id'):
 			attribute_model = Attribute.objects.get(id=attribute.id)
 		else:
