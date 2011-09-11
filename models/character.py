@@ -31,8 +31,7 @@ class Character(models.Model):
 				target = battle.char[i]
 				i = i+1
 			hit = char.attrib['hit']
-			hit.use(hit, char, target)
-			print(target.name)
+			hit.use(char, target)
 		character.fight = fight
 		return character
 	@staticmethod

@@ -19,7 +19,7 @@ def ai_dumb(char, battle):
 		while target == char:
 			target = battle.char[random_range(1, len(battle.char))-1]
 		i = random_range(1, len(attack))-1
-		attack[i].use(attack[i], char, target)
+		attack[i].use(char, target)
 
 def create(name):
 	'''Create new attribute.
@@ -152,7 +152,7 @@ def create(name):
 		bite.dep = ['strength']
 		def bite_use(self, user, target):
 			dmg = target.damage(self.level)
-		bite.use = bite_use
+		bite.use_func = bite_use
 		bite.multi = 5
 		bite.atype = 'attack'
 		return(bite)
@@ -164,7 +164,7 @@ def create(name):
 		def hit_use(self, user, target):
 			dmg = target.damage(self.level)
 			self.increase()
-		hit.use = hit_use
+		hit.use_func = hit_use
 		hit.multi = 5
 		hit.atype = "attack"
 		hit.title = "Uderzenie"
@@ -199,6 +199,7 @@ def create_monster(name):
 		wolf.add(createl('life', 4))
 		wolf.add(createl('bite', 4))
 		wolf.fight = ai_dumb
+		wolf.team = 2
 		return(wolf)
 	
 	if name == 'mushroom':
@@ -209,4 +210,5 @@ def create_monster(name):
 		mushroom.add(createl('life', 1))
 		mushroom.add(createl('bite', 1))
 		mushroom.fight = ai_dumb
+		mushroom.team = 2
 		return(mushroom)
