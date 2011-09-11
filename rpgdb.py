@@ -22,7 +22,6 @@ def random_range(a, b):
 	return random.randint(a, b)
 
 def ai_dumb(char, battle):
-	message('%s %d/%d'%(char.name, char.life, char.max_life))
 	attack = []
 	for name in char.attrib:
 		if char.attrib[name].atype == 'attack':
@@ -32,9 +31,7 @@ def ai_dumb(char, battle):
 		while target == char:
 			target = battle.char[random_range(1, len(battle.char))-1]
 		i = random_range(1, len(attack))-1
-		print(len(attack))
 		attack[i].use(attack[i], char, target)
-	input()
 
 def create(name):
 	#Strength
@@ -159,6 +156,7 @@ def create(name):
 		hit.dep = ["strength"]
 		def hit_use(self, user, target):
 			dmg = target.damage(self.level)
+			self.exp += dmg
 			message("%s lost %d HP."%(target.name, dmg))
 		hit.use = hit_use
 		hit.atype = "attack"
@@ -188,9 +186,9 @@ def create_monster(name):
 	if name == 'mushroom':
 		mushroom = extsea.Character('Mushroom')
 		mushroom.add(create('mushroom'))
-		mushroom.add(createl('strength', 4))
-		mushroom.add(createl('speed', 4))
-		mushroom.add(createl('life', 4))
-		mushroom.add(createl('bite', 4))
+		mushroom.add(createl('strength', 1))
+		mushroom.add(createl('speed', 1))
+		mushroom.add(createl('life', 1))
+		mushroom.add(createl('bite', 1))
 		mushroom.fight = ai_dumb
 		return(mushroom)

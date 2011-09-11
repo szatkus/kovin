@@ -32,6 +32,7 @@ class Character(models.Model):
 				i = i+1
 			hit = char.attrib['hit']
 			hit.use(hit, char, target)
+			print(target.name)
 		character.fight = fight
 		return character
 	'''Create django model from extsea character'''
@@ -62,6 +63,8 @@ class Attribute(models.Model):
 	def to_extsea(self):
 		attribute = rpgdb.createl(self.name, self.level)
 		attribute.id = self.id
+		attribute.rlevel = attribute.level
+		attribute.exp = self.exp
 		return attribute
 	@staticmethod
 	def from_extsea(attribute):
@@ -69,7 +72,7 @@ class Attribute(models.Model):
 			attribute_model = Attribute.objects.get(id=attribute.id)
 		else:
 			attribute_model = Attribute()
-			attribute_model.exp = 0
 		attribute_model.name = attribute.name
 		attribute_model.level = attribute.rlevel
+		attribute_model.exp = attribute.exp
 		return attribute_model

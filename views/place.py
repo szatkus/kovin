@@ -3,6 +3,8 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from kovin.models import Object, Place
+import extsea
+import rpgdb
 
 def look(request):
     if ('user' in request.session):
@@ -28,10 +30,12 @@ def action(request, id):
                    'character' : character,
                    'user' : user, 
                    'objects' : objects,
-                   'place' : user.place
+                   'place' : user.place,
+                   'Battle' : extsea.Battle,
+                   'rpgdb' : rpgdb
                    }
-        object = Object.objects.get(id=id)
-        exec(object.action) in context
+        obj = Object.objects.get(id=id)
+        exec(obj.action) in context
         user.from_extsea(character)
         user.save()
         request.session['user'] = user
