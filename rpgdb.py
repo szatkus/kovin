@@ -156,7 +156,7 @@ def create(name):
 		hit.dep = ["strength"]
 		def hit_use(self, user, target):
 			dmg = target.damage(self.level)
-			self.exp += dmg
+			self.increase()
 			message("%s lost %d HP."%(target.name, dmg))
 		hit.use = hit_use
 		hit.atype = "attack"
