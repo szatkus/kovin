@@ -8,17 +8,10 @@ class Character(models.Model):
 	name = models.CharField(max_length=50, primary_key=True)
 	password = models.CharField(max_length=100)
 	place = models.ForeignKey(Place)
-	dialog_buffer = []
 	class Meta:
 		app_label = 'kovin'
 	def __unicode__(self):
 		return self.name
-	def dialog(self, text):
-		'''Create new dialog'''
-		self.dialog_buffer.append(text)
-	def goto(self, place_id):
-		'''Go to specified location'''
-		self.place = Place.objects.get(id=place_id)
 	def to_extsea(self):
 		'''Convert django model into character from extsea module'''
 		character = extsea.Character(self.name)
