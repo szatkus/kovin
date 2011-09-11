@@ -45,6 +45,7 @@ def create(name):
 		def strength_mod(self, mod):
 			mod.tbonus *= self.level
 		strength.mod = strength_mod
+		strength.multi = 6
 		strength.atype = 'ability'
 		strength.title = 'Siła'
 		return(strength)
@@ -52,6 +53,7 @@ def create(name):
 	#Life
 	if name == 'life':
 		life = extsea.Attribute('life')
+		life.multi = 2
 		life.atype = 'ability'
 		life.title = 'Witalność'
 		return(life)
@@ -151,6 +153,7 @@ def create(name):
 		def bite_use(self, user, target):
 			dmg = target.damage(self.level)
 		bite.use = bite_use
+		bite.multi = 5
 		bite.atype = 'attack'
 		return(bite)
 	
@@ -162,6 +165,7 @@ def create(name):
 			dmg = target.damage(self.level)
 			self.increase()
 		hit.use = hit_use
+		hit.multi = 5
 		hit.atype = "attack"
 		hit.title = "Uderzenie"
 		return(hit)
