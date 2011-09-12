@@ -1,20 +1,7 @@
 #coding=utf-8
+'''RPG database'''
 import extsea
 import random
-
-def message(m):
-	print(m)
-
-def view(a):
-	print(a.name)
-	print(a.level)
-	print('%d/%d'%(a.exp, a.required))
-
-def viewc(c):
-	print(c.name)
-	for n in c.attrib:
-		a = c.attrib[n]
-		print('%d(%d) %s'%(a.rlevel, a.level, a.name))
 
 def random_range(a, b):
 	if (a == b):
@@ -22,7 +9,7 @@ def random_range(a, b):
 	return random.randint(a, b)
 
 def ai_dumb(char, battle):
-	message('%s %d/%d'%(char.name, char.life, char.max_life))
+	'''The simplest fight controller'''
 	attack = []
 	for name in char.attrib:
 		if char.attrib[name].atype == 'attack':
@@ -32,17 +19,33 @@ def ai_dumb(char, battle):
 		while target == char:
 			target = battle.char[random_range(1, len(battle.char))-1]
 		i = random_range(1, len(attack))-1
-		print(len(attack))
-		attack[i].use(attack[i], char, target)
-	input()
+		attack[i].use(char, target)
 
 def create(name):
+	'''Create new attribute.
+	
+	Example:
+	strength = rpgdb.create('strength')
+	
+	Available attributes:
+	strength
+	life
+	speed
+	human
+	wolf
+	mushroom
+	male
+	female
+	bite
+	hit
+	'''
 	#Strength
 	if name == 'strength':
 		strength = extsea.Attribute('strength')
 		def strength_mod(self, mod):
 			mod.tbonus *= self.level
 		strength.mod = strength_mod
+		strength.multi = 6
 		strength.atype = 'ability'
 		strength.title = 'Siła'
 		return(strength)
@@ -50,6 +53,7 @@ def create(name):
 	#Life
 	if name == 'life':
 		life = extsea.Attribute('life')
+		life.multi = 2
 		life.atype = 'ability'
 		life.title = 'Witalność'
 		return(life)
@@ -145,22 +149,23 @@ def create(name):
 	#Bite
 	if name == 'bite':
 		bite = extsea.Attribute('bite')
-		bite.deps = ['strength']
+		bite.dep = ['strength']
 		def bite_use(self, user, target):
 			dmg = target.damage(self.level)
-			message('%s lost %d HP.'%(target.name, dmg))
-		bite.use = bite_use
+		bite.use_func = bite_use
+		bite.multi = 5
 		bite.atype = 'attack'
 		return(bite)
 	
 	#Hit
 	if name == "hit":
 		hit = extsea.Attribute("hit")
-		hit.deps = ["strength"]
+		hit.dep = ["strength"]
 		def hit_use(self, user, target):
 			dmg = target.damage(self.level)
-			message("%s lost %d HP."%(target.name, dmg))
-		hit.use = hit_use
+			self.increase()
+		hit.use_func = hit_use
+		hit.multi = 5
 		hit.atype = "attack"
 		hit.title = "Uderzenie"
 		return(hit)
@@ -168,6 +173,9 @@ def create(name):
 	return(None)
 
 def createl(name, level):
+	'''Create attribute with specified level.
+	name - attribute's name (same as in create)
+	level - initial level'''
 	attrib = create(name)
 	if attrib != None:
 		attrib.rlevel = level
@@ -175,6 +183,14 @@ def createl(name, level):
 
 
 def create_monster(name):
+	'''Create a new monster by name.
+	
+	Example:
+	wolf = rpgdb.create_monster('wolf')
+	
+	Available monsters:
+	wolf
+	mushroom'''
 	if name == 'wolf':
 		wolf = extsea.Character('Wolf')
 		wolf.add(create('wolf'))
@@ -183,14 +199,16 @@ def create_monster(name):
 		wolf.add(createl('life', 4))
 		wolf.add(createl('bite', 4))
 		wolf.fight = ai_dumb
+		wolf.team = 2
 		return(wolf)
 	
 	if name == 'mushroom':
 		mushroom = extsea.Character('Mushroom')
 		mushroom.add(create('mushroom'))
-		mushroom.add(createl('strength', 4))
-		mushroom.add(createl('speed', 4))
-		mushroom.add(createl('life', 4))
-		mushroom.add(createl('bite', 4))
+		mushroom.add(createl('strength', 1))
+		mushroom.add(createl('speed', 1))
+		mushroom.add(createl('life', 1))
+		mushroom.add(createl('bite', 1))
 		mushroom.fight = ai_dumb
+		mushroom.team = 2
 		return(mushroom)

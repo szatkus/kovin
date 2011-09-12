@@ -1,2 +1,3 @@
 import character
-from user import *
+import user
+import place

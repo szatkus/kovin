@@ -7,10 +7,13 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
-    (r'^login/', views.login),
-    (r'^logout/', views.logout),
-    (r'^register/', views.register),
-    (r'^welcome/(?P<name>[a-zA-Z_]+)', views.welcome),
+    (r'^login/', views.user.login),
+    (r'^logout/', views.user.logout),
+    (r'^register/', views.user.register),
+    (r'^welcome/(?P<name>[a-zA-Z_]+)', views.user.welcome),
     (r'^stats/', views.character.stats),
-    (r'^$', views.index),
+    (r'^place/$', views.place.look),
+    (r'^place/(?P<id>\d+)', views.place.action),
+    (r'^gameover/', views.user.gameover),
+    (r'^$', views.user.index),
 )
