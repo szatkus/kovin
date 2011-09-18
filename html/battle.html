@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Walka{% endblock %}
+{% block content %}
+<div id="main">
+{% for data in log %}
+	{% if data.0 == 'use' %}
+		{{ data.2 }} użył {{ data.1 }} na {{ data.3 }}<br>
+	{% endif %}
+	{% if data.0 == 'damage' %}
+		{{ data.1 }} stracił {{ data.2 }} punktów życia<br>
+	{% endif %}
+	{% if data.0 == 'dead' %}
+		{{ data.1 }} zginął<br>
+	{% endif %}
+{% endfor %}
+</div>
+
+{% endblock %}

@@ -16,10 +16,15 @@ def ai_dumb(char, battle):
 			attack.append(char.attrib[name])
 	if len(attack) > 0:
 		target = char
-		while target == char:
+		limit = 100
+		while (target == char) and (limit > 0):
 			target = battle.char[random_range(1, len(battle.char))-1]
-		i = random_range(1, len(attack))-1
-		attack[i].use(char, target)
+			if target.team == char.team:
+				target = char
+			limit -= 1
+		if target != char:
+			i = random_range(1, len(attack))-1
+			attack[i].use(char, target)
 
 def create(name):
 	'''Create new attribute.
@@ -155,6 +160,7 @@ def create(name):
 		bite.use_func = bite_use
 		bite.multi = 5
 		bite.atype = 'attack'
+		bite.title = 'Ugryzienie'
 		return(bite)
 	
 	#Hit
@@ -192,7 +198,7 @@ def create_monster(name):
 	wolf
 	mushroom'''
 	if name == 'wolf':
-		wolf = extsea.Character('Wolf')
+		wolf = extsea.Character('Wilk')
 		wolf.add(create('wolf'))
 		wolf.add(createl('strength', 4))
 		wolf.add(createl('speed', 4))
@@ -203,7 +209,7 @@ def create_monster(name):
 		return(wolf)
 	
 	if name == 'mushroom':
-		mushroom = extsea.Character('Mushroom')
+		mushroom = extsea.Character('Grzyb')
 		mushroom.add(create('mushroom'))
 		mushroom.add(createl('strength', 1))
 		mushroom.add(createl('speed', 1))

@@ -2,7 +2,7 @@
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
-from kovin.models import Object, Place
+from kovin.models import Object, Place, BattleLog
 import extsea
 import rpgdb
 
@@ -30,6 +30,8 @@ def action(request, id):
 		def start_battle(chars):
 			battle = extsea.Battle(chars)
 			battle.run()
+			log = BattleLog(log='\n'.join(battle.log), owner=user)
+			log.save()
 			if (character.life <= 0):
 				raise(Exception('gameover'))
 		def dialog(text):

@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}Historia walk{% endblock %}
+{% block content %}
+<div id="main">
+{% for battle in battles %}
+<a href="/battle/{{ battle.id }}">{{ battle.get_time }}</a><br>
+</div>
+{% endfor %}
+{% endblock %}
