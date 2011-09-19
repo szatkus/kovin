@@ -19,5 +19,8 @@ urlpatterns = patterns('',
     (r'^generate_db/', views.generate_db.execute),
     (r'^battles/', views.battle.list),
     (r'^battle/(?P<id>\d+)', views.battle.view),
+    (r'^list/(?P<atype>.+)', views.character.list),
+    (r'^disable/(?P<name>.+)', views.character.disable),
+    (r'^enable/(?P<name>.+)', views.character.enable),
     (r'^$', views.user.index),
 )

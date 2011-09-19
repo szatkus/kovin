@@ -53,8 +53,11 @@ def action(request, id):
 		obj = Object.objects.get(id=id)
 		try:
 			exec(obj.action) in context
-		except Exception:
-			result = HttpResponseRedirect('/gameover/');
+		except Exception as e:
+			if e.message == 'gameover':
+				result = HttpResponseRedirect('/gameover/')
+			else:
+				raise(e)
 		user.from_extsea(character)
 		user.save()
 		request.session['user'] = user

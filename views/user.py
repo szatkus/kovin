@@ -8,6 +8,7 @@ import extsea
 import re
 import hashlib
 import rpgdb
+from random import *
 
 
 
@@ -43,10 +44,16 @@ def register(request):
 			context['error'] = 'Hasła nie zgadzają się.'
 		if not('error' in context):
 			new_char = extsea.Character(request.POST['name'])
-			new_char.add(rpgdb.create("human"))
+			new_char.add(rpgdb.create('human'))
 			new_char.add(rpgdb.createl("strength", 1))
 			new_char.add(rpgdb.createl("speed", 1))
 			new_char.add(rpgdb.createl("life", 1))
+			new_char.add(rpgdb.createl("magic", 1))
+			for i in range(1, 4):
+				rand = randint(0, 3)
+				traits = ['strength', 'speed', 'life', 'magic']
+				new_char.add(rpgdb.createl('trait_' + traits[rand] + str(random()), 1))
+					
 			new_char.add(rpgdb.createl("hit", 1))
 			if (request.POST['gender'] == 'male'):
 				new_char.add(rpgdb.create('male'))
