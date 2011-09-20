@@ -19,7 +19,7 @@ def look(request):
 				   'place' : user.place
 				   }
 		if user.available > datetime.now():
-			context['minutes'] = int((user.available-datetime.now()).total_seconds()/60)
+			context['minutes'] = int((user.available-datetime.now()).total_seconds()/60)+1
 			return render_to_response('busy.html', context, context_instance=RequestContext(request))
 		return render_to_response('place.html', context, context_instance=RequestContext(request))
 	else:
@@ -59,7 +59,7 @@ def action(request, id):
 				   }
 		result = None
 		if user.available > datetime.now():
-			context['minutes'] = int((user.available-datetime.now()).total_seconds()/60)
+			context['minutes'] = int((user.available-datetime.now()).total_seconds()/60)+1
 			return render_to_response('busy.html', context, context_instance=RequestContext(request))
 		obj = Object.objects.get(place=user.place, id=id)
 		try:
