@@ -8,6 +8,7 @@ class Character(models.Model):
 	name = models.CharField(max_length=50, primary_key=True)
 	password = models.CharField(max_length=100)
 	place = models.ForeignKey(Place)
+	available = models.DateTimeField()
 	class Meta:
 		app_label = 'kovin'
 	def __unicode__(self):
