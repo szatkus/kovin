@@ -8,6 +8,7 @@ class Character(models.Model):
 	name = models.CharField(max_length=50, primary_key=True)
 	password = models.CharField(max_length=100)
 	place = models.ForeignKey(Place)
+	available = models.DateTimeField()
 	class Meta:
 		app_label = 'kovin'
 	def __unicode__(self):
@@ -15,17 +16,9 @@ class Character(models.Model):
 	def to_extsea(self):
 		'''Convert django model into character from extsea module'''
 		character = extsea.Character(self.name)
-		for attribute in Attribute.objects.filter(owner = self):
+		for attribute in Attribute.objects.filter(owner = self, disabled = False):
 			character.add(attribute.to_extsea())
-		def fight(char, battle):
-			target = char
-			i = 0
-			while target == char:
-				target = battle.char[i]
-				i = i+1
-			hit = char.attrib['hit']
-			hit.use(char, target)
-		character.fight = fight
+		character.fight = rpgdb.ai_custom
 		return character
 	@staticmethod
 	def from_extsea(character):
@@ -48,7 +41,8 @@ class Attribute(models.Model):
 	name = models.CharField(max_length=50)
 	owner = models.ForeignKey(Character)
 	level = models.IntegerField()
-	exp = models.DecimalField(max_digits=15, decimal_places=2)
+	exp = models.FloatField()
+	disabled = models.BooleanField()
 	class Meta:
 		app_label = 'kovin'
 	def __unicode__(self):

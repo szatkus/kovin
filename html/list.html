@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Lista{% endblock %}
+{% block content %}
+{% for name, attrib in character.attrib.items %}
+	{% if attrib.atype == atype %}
+		<a href="/disable/{{ attrib.name }}">{{ attrib.title }}</a><br>
+	{% endif %}
+{% endfor %}<br>
+{% for attrib in trash %}
+	{% if attrib.atype == atype %}
+		<a href="/enable/{{ attrib.name }}">{{ attrib.title }}</a><br>
+	{% endif %}
+{% endfor %}<br>
+{% endblock %}

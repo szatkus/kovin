@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Statystyki{% endblock %}
+{% block content %}
+Imię: {{ character.name }}<br>
+{% for name, attrib in character.attrib.items %}
+	<b>{{ attrib.title }}</b><br>
+	{% if attrib.max_level > 1 %}
+		Poziom: {{ attrib.rlevel }}/{{ attrib.max_level }}<br>
+		Poziom obliczony: {{ attrib.level }}<br>
+	{% endif %}
+	{% if attrib.required > 0 %}
+		Doświadczenie: {{ attrib.exp }}/{{ attrib.required }}<br>
+		Podstawa wykładnika: {{ attrib.multi }}<br>
+	{% endif %}
+	Typ: {{ attrib.atype }}<br>
+	{% if attrib.dep %}
+		Zależności:
+		{% for dep in attrib.dep %}
+			{{ dep.title }}
+		{% endfor %}<br>
+	{% endif %}<br>
+{% endfor %}<br>
+{% endblock %}
