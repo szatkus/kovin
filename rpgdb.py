@@ -71,6 +71,7 @@ def create(name):
 	bite
 	hit
 	'''
+	result = extsea.Attribute(name)
 	#Strength
 	if name == 'strength':
 		strength = extsea.Attribute('strength')
@@ -240,15 +241,19 @@ def create(name):
 			ai.title = 'Uderzacz'
 		return(ai)
 	
-	return(None)
+	if name == 'money':
+		result.max_level = 1000000
+		result.atype = 'item'
+		result.title = 'Pieniądze'
+	
+	return(result)
 
 def createl(name, level):
 	'''Create attribute with specified level.
 	name - attribute's name (same as in create)
 	level - initial level'''
 	attrib = create(name)
-	if attrib != None:
-		attrib.rlevel = level
+	attrib.rlevel = level
 	return(attrib)
 
 

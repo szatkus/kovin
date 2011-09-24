@@ -8,7 +8,7 @@ class Character(models.Model):
 	name = models.CharField(max_length=50, primary_key=True)
 	password = models.CharField(max_length=100)
 	place = models.ForeignKey(Place)
-	available = models.DateTimeField()
+	available = models.DateTimeField(auto_now_add=True)
 	class Meta:
 		app_label = 'kovin'
 	def __unicode__(self):
@@ -41,7 +41,7 @@ class Attribute(models.Model):
 	name = models.CharField(max_length=50)
 	owner = models.ForeignKey(Character)
 	level = models.IntegerField()
-	exp = models.FloatField()
+	exp = models.DecimalField(max_digits=10, decimal_places=2)
 	disabled = models.BooleanField()
 	class Meta:
 		app_label = 'kovin'

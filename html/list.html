@@ -3,7 +3,10 @@
 {% block content %}
 {% for name, attrib in character.attrib.items %}
 	{% if attrib.atype == atype %}
-		<a href="/disable/{{ attrib.name }}">{{ attrib.title }}</a><br>
+		<a href="/disable/{{ attrib.name }}">{{ attrib.title }}</a>
+		{% if attrib.rlevel > 1 %}
+			{{ attrib.rlevel }}
+		{% endif %}<br>
 	{% endif %}
 {% endfor %}<br>
 {% for attrib in trash %}
