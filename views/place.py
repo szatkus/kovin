@@ -64,7 +64,7 @@ def action(request, id):
 		obj = Object.objects.get(place=user.place, id=id)
 		try:
 			exec(obj.action) in context
-		except Exception as e:
+		except Exception:
 			if e.message == 'gameover':
 				result = HttpResponseRedirect('/gameover/')
 			else:

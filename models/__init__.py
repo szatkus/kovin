@@ -1,3 +1,3 @@
-from .character import *
-from .place import *
-from .battle import *
+from character import *
+from place import *
+from battle import *

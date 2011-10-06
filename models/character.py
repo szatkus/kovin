@@ -63,5 +63,5 @@ class Attribute(models.Model):
 			attribute_model = Attribute()
 		attribute_model.name = attribute.name
 		attribute_model.level = attribute.rlevel
-		attribute_model.exp = attribute.exp
+		attribute_model.exp = str(attribute.exp)
 		return attribute_model
