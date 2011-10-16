@@ -170,6 +170,21 @@ def create(name):
 		mushroom.mod = mushroom_mod
 		mushroom.atype = 'race'
 		return(mushroom)
+	
+	#Bat
+	if name == 'bat':
+		result = extsea.Attribute('bat')
+		result.affect = ['strength', 'speed', 'life']
+		result.max_level = 1
+		def mod(self, mod):
+			if mod.name == 'life':
+				mod.tbonus *= 3
+			if mod.name == 'strength':
+				mod.tbonus *= 2
+			if mod.name == 'speed':
+				mod.tbonus *= 8
+		result.mod = mod
+		result.atype = 'race'
 		
 	#Male
 	if name == 'male':
@@ -265,7 +280,12 @@ def create_monster(name):
 	
 	Available monsters:
 	wolf
-	mushroom'''
+	mushroom
+	bat'''
+	result = extsea.Character(name)
+	result.add(createl('strength', 1))
+	result.add(createl('speed', 1))
+	result.add(createl('life', 1))
 	if name == 'wolf':
 		wolf = extsea.Character('Wilk')
 		wolf.add(create('wolf'))
@@ -287,3 +307,12 @@ def create_monster(name):
 		mushroom.fight = ai_dumb
 		mushroom.team = 2
 		return(mushroom)
+	
+	if name == 'bat':
+		result.name = 'Nietoperz'
+		result.add(create('bat'))
+		result.add(createl('bite', 1))
+		result.fight = ai_dumb
+		result.team = 2
+	
+	return(result)

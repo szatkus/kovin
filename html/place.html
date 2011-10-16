@@ -5,7 +5,7 @@
 {% if forloop.first %}
 <div id="dialog">
 {% endif %}
-<div>{{ text }}</div>
+<div>{{ text|safe }}</div>
 {% if forloop.last %}
 <div><button onclick="document.getElementById('dialog').style.display = 'none'">Zamknij</button>
 </div>
