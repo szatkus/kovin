@@ -46,7 +46,7 @@ def action(request, id):
 			battle.run()
 			log = BattleLog(log='\n'.join(battle.log), owner=user)
 			log.save()
-			text += '<a href="battle/'+str(log.id)+'">Zobacz</a>'
+			text += '<a href="/battle/'+str(log.id)+'">Zobacz</a>'
 			dialog(text)
 			if (character.life <= 0):
 				raise(Exception('gameover'))
@@ -65,6 +65,8 @@ def action(request, id):
 				text += ' (' + str(amount) + ')'
 			dialog(text)
 			character.add(item)
+		def stop():
+			raise(Exception('stop'))
 		context = {
 				   'character' : character,
 				   'objects' : objects,
@@ -77,6 +79,7 @@ def action(request, id):
 				   'busy' : busy,
 				   'chance' : chance,
 				   'receive' : receive,
+				   'stop' : stop,
 				   }
 		result = None
 		if user.available > datetime.now():
@@ -86,10 +89,11 @@ def action(request, id):
 		try:
 			exec(obj.action) in context
 		except Exception as e:
-			if e.message == 'gameover':
-				result = HttpResponseRedirect('/gameover/')
-			else:
-				raise(e)
+			if e.message != 'stop':
+				if e.message == 'gameover':
+					result = HttpResponseRedirect('/gameover/')
+				else:
+					raise(e)
 		user.from_extsea(character)
 		user.save()
 		request.session['user'] = user

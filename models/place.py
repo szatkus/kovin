@@ -8,7 +8,7 @@ class Place(models.Model):
 		verbose_name = 'miejsce'
 		verbose_name_plural = 'miejsca'
 	def __unicode__(self):
-		return self.name
+		return self.name + ' (' + self.id + ')'
 	
 class Object(models.Model):
 	name = models.CharField(max_length=50)
@@ -19,7 +19,7 @@ class Object(models.Model):
 		verbose_name = 'obiekt'
 		verbose_name_plural = 'obiekty'
 	def __unicode__(self):
-		return self.name + ' w ' + self.place.name
+		return self.name + ' w ' + self.place.__unicode__()
 
 class Variable(models.Model):
 	key = models.CharField(max_length=50, primary_key=True)

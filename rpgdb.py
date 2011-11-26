@@ -27,7 +27,7 @@ def ai_dumb(char, battle):
 			attack[i].use(char, target)
 
 def ai_custom(char, battle):
-	'''The simplest fight controller'''
+	'''Customizible controller'''
 	attacks = []
 	for name in char.attrib:
 		if char.attrib[name].atype == 'attack':
